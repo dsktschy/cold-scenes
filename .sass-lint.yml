@@ -34,7 +34,7 @@ rules:
   indentation: 2
   leading-zero: 2
   nesting-depth: 2
-  property-sort-order: 2
+  property-sort-order: 0
   quotes: 2
   variable-for-property: 2
   zero-unit: 2
