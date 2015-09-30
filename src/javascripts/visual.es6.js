@@ -20,6 +20,7 @@ const
   MAX_FRAMERATE_RESISTER_NUM = 60,
   MAX_MAX_FRAME = 200,
   MIN_MAX_FRAME = 50,
+  // 現在のところ0にしか対応していない
   INITIAL_MODE = 0;
 
 var
@@ -28,7 +29,8 @@ var
   decrementFrame, randomizeScene, randomizeFrame, setUpFunctions, onKeydown,
   updateFunctions, drawFunctions, drawImage, alpha, maxFrameCount,
   reduceFramerate, incrementOrDecrementFrame, getSetUpFunctions,
-  getUpdateFunctions, getDrawFunctions, framerateResisterNum, resetFrameCount;
+  getUpdateFunctions, getDrawFunctions, framerateResisterNum, resetFrameCount,
+  imagesAreAvailable, userMediaIsAvailable, onGetUserMedia;
 
 /**
  * 初期設定
@@ -38,6 +40,8 @@ setUp = () => {
   scene = 0;
   frame = 0;
   framerateResisterNum = 0;
+  imagesAreAvailable = false;
+  userMediaIsAvailable = false;
   ctx = getContext();
   setUpFunctions = getSetUpFunctions();
   updateFunctions = getUpdateFunctions();
@@ -80,36 +84,57 @@ getSetUpFunctions = () => [
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = MIN_ALPHA + MIN_ALPHA_RANGE;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable || !userMediaIsAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
   (e) => {
+    if (!imagesAreAvailable) {
+      return;
+    }
     mode = e.keyCode - 48;
     alpha = COVERED;
     ctx.globalAlpha = alpha;
@@ -244,11 +269,12 @@ drawImage = () => {
 
 /**
  * 画像読み込み完了イベントのハンドラー
- *   全ての画像が読み込み完了していたらload-imagesイベントを実行する
+ *   全ての画像が読み込み完了していたらフラグを立てる
  */
 onLoadImage = () => {
   if (++loadedCount === IMAGE_TOTAL) {
-    $(window).trigger('load-images');
+    imagesAreAvailable = true;
+    console.log('Images are now available.');
   }
 };
 
@@ -345,12 +371,22 @@ onKeydown = (e) => {
 };
 
 /**
+ * 音声入力のAnalyser接続完了イベントのハンドラ
+ */
+onGetUserMedia = () => {
+  userMediaIsAvailable = true;
+  console.log('User media is now available.');
+};
+
+/**
  * モジュール起動
  * @exports
  */
 initModule = ($container) => {
   $container.html(HTML);
-  $(window).on('keydown', onKeydown);
+  $(window)
+    .on('keydown', onKeydown)
+    .on('get-user-media', onGetUserMedia);
 };
 
 export default {

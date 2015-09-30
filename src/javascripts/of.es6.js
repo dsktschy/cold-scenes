@@ -1,6 +1,6 @@
-import $ from 'jquery';
 import _requestAnimationFrame from './request-animation-frame';
 import visual from './visual';
+import audio from './audio';
 
 var initModule, setUp, update, draw, loop;
 
@@ -9,6 +9,7 @@ var initModule, setUp, update, draw, loop;
  */
 setUp = () => {
   visual.setUp();
+  audio.setUp();
 };
 
 /**
@@ -44,8 +45,9 @@ initModule = ($container) => {
     return;
   }
   visual.initModule($container);
-  $(window).on('load-images', loop);
+  audio.initModule($container);
   setUp();
+  loop();
 };
 
 export default {initModule};
