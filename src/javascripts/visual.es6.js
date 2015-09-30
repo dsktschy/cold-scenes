@@ -20,15 +20,14 @@ const
   MAX_FRAMERATE_RESISTER_NUM = 60,
   MAX_MAX_FRAME = 200,
   MIN_MAX_FRAME = 50,
-  // 現在のところ0にしか対応していない
-  INITIAL_MODE = 0;
+  MAX_VOLUME = 1024 * 36;
 
 var
   initModule, getContext, onLoadImage, loadImages, clear, ctx, images, setUp,
   loadedCount, update, draw, scene, frame, incrementFrame, mode, frameCount,
   decrementFrame, randomizeScene, randomizeFrame, setUpFunctions, onKeydown,
-  updateFunctions, drawFunctions, drawImage, alpha, maxFrameCount,
-  reduceFramerate, incrementOrDecrementFrame, getSetUpFunctions,
+  updateFunctions, drawFunctions, drawImage, alpha, maxFrameCount, setVolume,
+  reduceFramerate, incrementOrDecrementFrame, getSetUpFunctions, volume,
   getUpdateFunctions, getDrawFunctions, framerateResisterNum, resetFrameCount,
   imagesAreAvailable, userMediaIsAvailable, onGetUserMedia;
 
@@ -50,7 +49,6 @@ setUp = () => {
   loadedCount = 0;
   loadImages();
   resetFrameCount();
-  $(window).trigger($.Event('keydown', {keyCode: INITIAL_MODE + 48}));
 };
 
 /**
@@ -190,20 +188,20 @@ getUpdateFunctions = () => [
     randomizeFrame();
     randomizeScene();
   },
-  // reduceFramerate.bind(null, Math.floor(util.remap(
-  //   volumeTotal,
-  //   0, MAX_VOLUME,
-  //   MAX_FRAMERATE_RESISTER, 1
-  // )), () => {
-  reduceFramerate.bind(null, DEFAULT_FRAMERATE_RESISTER, () => {
-    // randomFrameMode ? randomizeFrame() : incrementOrDecrementFrame();
-    incrementOrDecrementFrame();
-    if (++frameCount === maxFrameCount) {
-      frameCount = 0;
-      maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
-      randomizeScene();
-    }
-  }),
+  () => {
+    reduceFramerate(
+      Math.floor(util.remap(volume, 0, MAX_VOLUME, MAX_FRAMERATE_RESISTER, 1)),
+      () => {
+        // randomFrameMode ? randomizeFrame() : incrementOrDecrementFrame();
+        incrementOrDecrementFrame();
+        if (++frameCount === maxFrameCount) {
+          frameCount = 0;
+          maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
+          randomizeScene();
+        }
+      }
+    );
+  },
   () => {
     if (incrementFrame()) {
       randomizeScene();
@@ -329,6 +327,14 @@ randomizeFrame = () => {
 };
 
 /**
+ * 音量を保持する
+ * @exports
+ */
+setVolume = (v) => {
+  volume = v;
+};
+
+/**
  * キーボード押下イベントのハンドラ
  *   右: frameを1つ進める
  *   左: frameを1つ戻す
@@ -336,8 +342,6 @@ randomizeFrame = () => {
  *   下: frameランダムに変更
  *   スペース: sceneをランダムに変更
  *   0-7: modeを変更
- *     1: 最低透明度に設定
- *     1以外: 完全不透明に設定
  */
 onKeydown = (e) => {
   switch (e.keyCode) {
@@ -371,7 +375,7 @@ onKeydown = (e) => {
 };
 
 /**
- * 音声入力のAnalyser接続完了イベントのハンドラ
+ * 音声入力のAnalyser接続完了イベントのハンドラー
  */
 onGetUserMedia = () => {
   userMediaIsAvailable = true;
@@ -394,4 +398,5 @@ export default {
   setUp,
   update,
   draw,
+  setVolume,
 };

@@ -1,21 +1,33 @@
+import $ from 'jquery';
 import _requestAnimationFrame from './request-animation-frame';
 import visual from './visual';
 import audio from './audio';
+
+const
+  // 現在のところハンドラー側が48にしか対応していない
+  INITIAL_KEYDOWN_KEY_CODE = 48;
 
 var initModule, setUp, update, draw, loop;
 
 /**
  * 初期設定
+ *   visualが先である必要あり
+ *     get-user-mediaイベントが実行される前にハンドラーを登録する必要があるため
  */
 setUp = () => {
   visual.setUp();
   audio.setUp();
+  $(window).trigger($.Event('keydown', {keyCode: INITIAL_KEYDOWN_KEY_CODE}));
 };
 
 /**
  * 反復毎の更新処理
+ *   audioが先である必要あり
+ *     先に音量を取得しておく必要があるため
  */
 update = () => {
+  audio.update();
+  visual.setVolume(audio.getVolume());
   visual.update();
 };
 
