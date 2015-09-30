@@ -16,8 +16,11 @@ body,
   height: 100%;
 }
 
-.container {
+body {
   background: $black;
+}
+
+.container {
   // centering
   position: relative;
 }
