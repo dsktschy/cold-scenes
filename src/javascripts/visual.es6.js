@@ -236,7 +236,7 @@ loadImages = () => {
     images[s] = [];
     for (let f = 0; f < FRAME_TOTAL; f++) {
       images[s][f] = new Image();
-      images[s][f].src = `../images/${s}/${f}.jpg`;
+      images[s][f].src = `images/${s}/${f}.jpg`;
       images[s][f].onload = onLoadImage;
     }
   }
