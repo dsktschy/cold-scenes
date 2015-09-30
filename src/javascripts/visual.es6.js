@@ -161,7 +161,6 @@ getUpdateFunctions = () => [
     randomizeScene();
   },
   reduceFramerate.bind(null, DEFAULT_FRAMERATE_RESISTER, () => {
-    // randomFrameMode ? randomizeFrame() : incrementOrDecrementFrame();
     incrementOrDecrementFrame();
     if (++frameCount === maxFrameCount) {
       frameCount = 0;
@@ -175,7 +174,6 @@ getUpdateFunctions = () => [
     }
     ctx.globalAlpha = alpha;
     reduceFramerate(DEFAULT_FRAMERATE_RESISTER, () => {
-      // randomFrameMode ? randomizeFrame() : incrementOrDecrementFrame();
       incrementOrDecrementFrame();
       if (++frameCount === maxFrameCount) {
         frameCount = 0;
@@ -192,7 +190,6 @@ getUpdateFunctions = () => [
     reduceFramerate(
       Math.floor(util.remap(volume, 0, MAX_VOLUME, MAX_FRAMERATE_RESISTER, 1)),
       () => {
-        // randomFrameMode ? randomizeFrame() : incrementOrDecrementFrame();
         incrementOrDecrementFrame();
         if (++frameCount === maxFrameCount) {
           frameCount = 0;
