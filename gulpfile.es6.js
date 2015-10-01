@@ -128,10 +128,16 @@ gulp.task('browserify', ['babel'], (done) => {
     .pipe($.plumber(plumberOpt))
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.if(
+      process.env.NODE_ENV !== 'production',
+      $.sourcemaps.init({loadMaps: true})
+    ))
     .pipe($.uglify({mangle: process.env.NODE_ENV === 'production'}))
     .pipe($.rename({suffix: '.min'}))
-    .pipe($.sourcemaps.write(`../${mapDir}`))
+    .pipe($.if(
+      process.env.NODE_ENV !== 'production',
+      $.sourcemaps.write(`../${mapDir}`)
+    ))
     .pipe(gulp.dest(publicJSDir));
 });
 
@@ -183,10 +189,16 @@ gulp.task('cssmin', ['css-concat'], () => {
       `${srcCSSDir}bundle.css`,
     ], {base: srcCSSDir})
     .pipe($.plumber(plumberOpt))
-    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.if(
+      process.env.NODE_ENV !== 'production',
+      $.sourcemaps.init({loadMaps: true})
+    ))
     .pipe($.cssmin())
     .pipe($.rename({suffix: '.min'}))
-    .pipe($.sourcemaps.write(`../${mapDir}`))
+    .pipe($.if(
+      process.env.NODE_ENV !== 'production',
+      $.sourcemaps.write(`../${mapDir}`)
+    ))
     .pipe(gulp.dest(publicCSSDir));
 });
 
