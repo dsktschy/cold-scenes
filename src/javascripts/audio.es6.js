@@ -8,7 +8,7 @@ const
   MAX_VOLUME = 1024 * 36;
 
 var
-  initModule, setUp, update, ctx, analyser, spectrums, getUserMedia, mode,
+  init, setUp, update, ctx, analyser, spectrums, getUserMedia, mode,
   setUpFunctions, updateFunctions, getSetUpFunctions, getUpdateFunctions,
   volumeTotal, onKeydown, getVolume, userMediaIsAvailable;
 
@@ -158,7 +158,7 @@ onKeydown = (e) => {
  * モジュール起動
  * @exports
  */
-initModule = () => {
+init = () => {
   if (!_url || !_audioContext || !_navigatorGetUserMedia) {
     alert('This browser does not support a few modern APIs. Use Chrome.');
     return;
@@ -167,7 +167,7 @@ initModule = () => {
 };
 
 export default {
-  initModule,
+  init,
   setUp,
   update,
   getVolume,

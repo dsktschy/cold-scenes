@@ -2,5 +2,5 @@ import $ from 'jquery';
 import ofjs from './of';
 
 $(() => {
-  ofjs.initModule($('#container'));
+  ofjs.init($('#container'));
 });

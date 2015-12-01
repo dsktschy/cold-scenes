@@ -23,7 +23,7 @@ const
   MAX_VOLUME = 1024 * 36;
 
 var
-  initModule, getContext, onLoadImage, loadImages, clear, ctx, images, setUp,
+  init, getContext, onLoadImage, loadImages, clear, ctx, images, setUp,
   loadedCount, update, draw, scene, frame, incrementFrame, mode, frameCount,
   decrementFrame, randomizeScene, randomizeFrame, setUpFunctions, onKeydown,
   updateFunctions, drawFunctions, drawImage, alpha, maxFrameCount, setVolume,
@@ -383,7 +383,7 @@ onGetUserMedia = () => {
  * モジュール起動
  * @exports
  */
-initModule = ($container) => {
+init = ($container) => {
   $container.html(HTML);
   $(window)
     .on('keydown', onKeydown)
@@ -391,7 +391,7 @@ initModule = ($container) => {
 };
 
 export default {
-  initModule,
+  init,
   setUp,
   update,
   draw,

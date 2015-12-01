@@ -7,7 +7,7 @@ const
   // 現在のところハンドラー側が48にしか対応していない
   INITIAL_KEYDOWN_KEY_CODE = 48;
 
-var initModule, setUp, update, draw, loop;
+var init, setUp, update, draw, loop;
 
 /**
  * 初期設定
@@ -51,15 +51,15 @@ loop = () => {
  * モジュール起動
  * @exports
  */
-initModule = ($container) => {
+init = ($container) => {
   if (!_requestAnimationFrame) {
     alert('This browser does not support a few modern APIs. Use Chrome.');
     return;
   }
-  visual.initModule($container);
-  audio.initModule($container);
+  visual.init($container);
+  audio.init($container);
   setUp();
   loop();
 };
 
-export default {initModule};
+export default {init};
