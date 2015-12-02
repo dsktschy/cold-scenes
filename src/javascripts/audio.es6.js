@@ -5,7 +5,15 @@ import hasNavigatorGetUserMedia from './apis/navigator-get-user-media';
 
 const
   FFT_SIZE = 1024,
-  MAX_VOLUME = 1024 * 36;
+  MAX_VOLUME = 1024 * 36,
+  /** API非対応ブラウザーに表示するアラートメッセージ */
+  API_ALERT_MESSAGE = '' +
+    'This browser is not supported.\n' +
+    'Please open in GoogleChrome.',
+  /** ユーザー入力音声取得失敗時のアラートメッセージ */
+  AUDIO_ALERT_MESSAGE = 'Audio error. Please reload',
+  /** ユーザー入力音声取得完了時のメッセージ */
+  CONSOLE_MESSAGE = 'Audio is now available.';
 
 var
   init, setUp, update, ctx, analyser, spectrums, getUserMedia, mode,
@@ -121,9 +129,11 @@ getUserMedia = () => {
       ctx.createMediaStreamSource(stream).connect(analyser);
       $(window).trigger('get-user-media');
       userMediaIsAvailable = true;
+      console.log(CONSOLE_MESSAGE);
     },
     (e) => {
-      alert('Audio error. Please reload');
+      console.log(e);
+      alert(AUDIO_ALERT_MESSAGE);
       return;
     }
   );
@@ -160,7 +170,7 @@ onKeydown = (e) => {
  */
 init = () => {
   if (!hasURL || !hasAudioContext || !hasNavigatorGetUserMedia) {
-    alert('This browser does not support a few modern APIs. Use Chrome.');
+    alert(API_ALERT_MESSAGE);
     return;
   }
   $(window).on('keydown', onKeydown);

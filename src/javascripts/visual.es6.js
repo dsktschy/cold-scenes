@@ -20,7 +20,9 @@ const
   MAX_FRAMERATE_RESISTER_NUM = 60,
   MAX_MAX_FRAME = 200,
   MIN_MAX_FRAME = 50,
-  MAX_VOLUME = 1024 * 36;
+  MAX_VOLUME = 1024 * 36,
+  /** 画像読み込み完了時のメッセージ */
+  CONSOLE_MESSAGE = 'Images are now available.';
 
 var
   init, getContext, onLoadImage, loadImages, clear, ctx, images, setUp,
@@ -269,7 +271,7 @@ drawImage = () => {
 onLoadImage = () => {
   if (++loadedCount === IMAGE_TOTAL) {
     imagesAreAvailable = true;
-    console.log('Images are now available.');
+    console.log(CONSOLE_MESSAGE);
   }
 };
 
@@ -376,7 +378,6 @@ onKeydown = (e) => {
  */
 onGetUserMedia = () => {
   userMediaIsAvailable = true;
-  console.log('User media is now available.');
 };
 
 /**

@@ -9,7 +9,11 @@ const
   /** HTML */
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`,
   // 現在のところハンドラー側が48にしか対応していない
-  INITIAL_KEYDOWN_KEY_CODE = 48;
+  INITIAL_KEYDOWN_KEY_CODE = 48,
+  /** requestAnimationFrame非対応ブラウザーに表示するアラートメッセージ */
+  ALERT_MESSAGE = '' +
+    'This browser is not supported.\n' +
+    'Please open in GoogleChrome.';
 
 var init, setUp, update, draw, loop, $cache, set$cache;
 
@@ -70,7 +74,7 @@ loop = () => {
  */
 init = ($wrapper) => {
   if (!hasRequestAnimationFrame) {
-    alert('This browser does not support a few modern APIs. Use Chrome.');
+    alert(ALERT_MESSAGE);
     return;
   }
   $wrapper.append(HTML);
