@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import _url from './url';
-import _audioContext from './audio-context';
-import _navigatorGetUserMedia from './navigator-get-user-media';
+import hasURL from './apis/url';
+import hasAudioContext from './apis/audio-context';
+import hasNavigatorGetUserMedia from './apis/navigator-get-user-media';
 
 const
   FFT_SIZE = 1024,
@@ -159,7 +159,7 @@ onKeydown = (e) => {
  * @exports
  */
 init = () => {
-  if (!_url || !_audioContext || !_navigatorGetUserMedia) {
+  if (!hasURL || !hasAudioContext || !hasNavigatorGetUserMedia) {
     alert('This browser does not support a few modern APIs. Use Chrome.');
     return;
   }

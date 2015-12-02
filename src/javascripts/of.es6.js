@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import _requestAnimationFrame from './request-animation-frame';
+import hasRequestAnimationFrame from './apis/request-animation-frame';
 import visual from './visual';
 import audio from './audio';
 
@@ -69,7 +69,7 @@ loop = () => {
  * @exports
  */
 init = ($wrapper) => {
-  if (!_requestAnimationFrame) {
+  if (!hasRequestAnimationFrame) {
     alert('This browser does not support a few modern APIs. Use Chrome.');
     return;
   }
