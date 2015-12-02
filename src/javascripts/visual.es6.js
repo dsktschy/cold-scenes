@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import util from './util';
+import modUtil from './util';
 
 const
   IMAGE_WIDTH = 1024,
@@ -164,7 +164,7 @@ getUpdateFunctions = () => [
     incrementOrDecrementFrame();
     if (++frameCount === maxFrameCount) {
       frameCount = 0;
-      maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
+      maxFrameCount = modUtil.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
       randomizeScene();
     }
   }),
@@ -177,7 +177,7 @@ getUpdateFunctions = () => [
       incrementOrDecrementFrame();
       if (++frameCount === maxFrameCount) {
         frameCount = 0;
-        maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
+        maxFrameCount = modUtil.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
         randomizeScene();
       }
     });
@@ -188,12 +188,12 @@ getUpdateFunctions = () => [
   },
   () => {
     reduceFramerate(
-      Math.floor(util.remap(volume, 0, MAX_VOLUME, MAX_FRAMERATE_RESISTER, 1)),
+      Math.floor(modUtil.remap(volume, 0, MAX_VOLUME, MAX_FRAMERATE_RESISTER, 1)),
       () => {
         incrementOrDecrementFrame();
         if (++frameCount === maxFrameCount) {
           frameCount = 0;
-          maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
+          maxFrameCount = modUtil.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
           randomizeScene();
         }
       }
@@ -244,7 +244,7 @@ loadImages = () => {
  */
 resetFrameCount = () => {
   frameCount = 0;
-  maxFrameCount = util.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
+  maxFrameCount = modUtil.randomizeIntFromRange(MIN_MAX_FRAME, MAX_MAX_FRAME);
 };
 
 /**
@@ -317,10 +317,10 @@ incrementOrDecrementFrame = () => {
  * 画像通し番号をランダムに変更
  */
 randomizeScene = () => {
-  scene = util.randomizeIntExceptFor(scene, SCENE_TOTAL);
+  scene = modUtil.randomizeIntExceptFor(scene, SCENE_TOTAL);
 };
 randomizeFrame = () => {
-  frame = util.randomizeIntExceptFor(frame, FRAME_TOTAL);
+  frame = modUtil.randomizeIntExceptFor(frame, FRAME_TOTAL);
 };
 
 /**

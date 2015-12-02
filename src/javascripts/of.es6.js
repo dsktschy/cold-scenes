@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import hasRequestAnimationFrame from './apis/request-animation-frame';
-import visual from './visual';
-import audio from './audio';
+import modVisual from './visual';
+import modAudio from './audio';
 
 const
   /** モジュール名 */
@@ -25,12 +25,12 @@ set$cache = () => {
 
 /**
  * 初期設定
- *   visualが先である必要あり
+ *   modVisualが先である必要あり
  *     get-user-mediaイベントが実行される前にハンドラーを登録する必要があるため
  */
 setUp = () => {
-  visual.setUp();
-  audio.setUp();
+  modVisual.setUp();
+  modAudio.setUp();
   $cache.window.trigger($.Event(
     'keydown',
     {keyCode: INITIAL_KEYDOWN_KEY_CODE}
@@ -39,20 +39,20 @@ setUp = () => {
 
 /**
  * 反復毎の更新処理
- *   audioが先である必要あり
+ *   modAudioが先である必要あり
  *     先に音量を取得しておく必要があるため
  */
 update = () => {
-  audio.update();
-  visual.setVolume(audio.getVolume());
-  visual.update();
+  modAudio.update();
+  modVisual.setVolume(modAudio.getVolume());
+  modVisual.update();
 };
 
 /**
  * 反復毎の更新以外の処理
  */
 draw = () => {
-  visual.draw();
+  modVisual.draw();
 };
 
 /**
@@ -75,8 +75,8 @@ init = ($wrapper) => {
   }
   $wrapper.append(HTML);
   set$cache();
-  visual.init($cache.self);
-  audio.init($cache.self);
+  modVisual.init($cache.self);
+  modAudio.init($cache.self);
   setUp();
   loop();
 };

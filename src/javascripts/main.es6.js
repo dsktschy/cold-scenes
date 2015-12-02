@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import ofjs from './of';
+import modOF from './of';
 
 $(() => {
-  ofjs.init($('body'));
+  modOF.init($('body'));
 });
