@@ -2,5 +2,5 @@ import $ from 'jquery';
 import ofjs from './of';
 
 $(() => {
-  ofjs.init($('#container'));
+  ofjs.init($('body'));
 });

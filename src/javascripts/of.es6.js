@@ -4,10 +4,24 @@ import visual from './visual';
 import audio from './audio';
 
 const
+  /** モジュール名 */
+  MOD_NAME = 'of',
+  /** HTML */
+  HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`,
   // 現在のところハンドラー側が48にしか対応していない
   INITIAL_KEYDOWN_KEY_CODE = 48;
 
-var init, setUp, update, draw, loop;
+var init, setUp, update, draw, loop, $cache, set$cache;
+
+/**
+ * jqueryオブジェクトを保持
+ */
+set$cache = () => {
+  $cache = {
+    self: $(`#${MOD_NAME}`),
+    window: $(window),
+  };
+};
 
 /**
  * 初期設定
@@ -17,7 +31,10 @@ var init, setUp, update, draw, loop;
 setUp = () => {
   visual.setUp();
   audio.setUp();
-  $(window).trigger($.Event('keydown', {keyCode: INITIAL_KEYDOWN_KEY_CODE}));
+  $cache.window.trigger($.Event(
+    'keydown',
+    {keyCode: INITIAL_KEYDOWN_KEY_CODE}
+  ));
 };
 
 /**
@@ -51,13 +68,15 @@ loop = () => {
  * モジュール起動
  * @exports
  */
-init = ($container) => {
+init = ($wrapper) => {
   if (!_requestAnimationFrame) {
     alert('This browser does not support a few modern APIs. Use Chrome.');
     return;
   }
-  visual.init($container);
-  audio.init($container);
+  $wrapper.append(HTML);
+  set$cache();
+  visual.init($cache.self);
+  audio.init($cache.self);
   setUp();
   loop();
 };
