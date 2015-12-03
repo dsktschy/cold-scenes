@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import modOF from './of';
+import modCS from './cs';
 
 $(() => {
-  modOF.init($('body'));
+  modCS.init($('body'));
 });

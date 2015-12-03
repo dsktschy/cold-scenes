@@ -1,10 +1,22 @@
 import $ from 'jquery';
+import modOFVisual from './of/visual';
 import modUtil from './util';
 
 const
+  /** モジュール名 */
+  ELEM_NAME = 'cs-visual',
+  /** 画像の幅 */
   IMAGE_WIDTH = 1024,
+  /** 画像の高さ */
   IMAGE_HEIGHT = 768,
-  HTML = `<canvas width="${IMAGE_WIDTH}" height="${IMAGE_HEIGHT}"></canvas>`,
+  /** HTML */
+  HTML = '' +
+    '<canvas ' +
+      `id="${ELEM_NAME}" class="${ELEM_NAME}" ` +
+      `width="${IMAGE_WIDTH}" height="${IMAGE_HEIGHT}"` +
+    '></canvas>',
+  /** 2d or webgl */
+  CONTEXT_TYPE = '2d',
   SCENE_TOTAL = 30,
   FRAME_TOTAL = 10,
   IMAGE_TOTAL = SCENE_TOTAL * FRAME_TOTAL,
@@ -25,13 +37,23 @@ const
   CONSOLE_MESSAGE = 'Images are now available.';
 
 var
-  init, getContext, onLoadImage, loadImages, clear, ctx, images, setUp,
+  init, onLoadImage, loadImages, clear, ctx, images, setUp, set$cache, $cache,
   loadedCount, update, draw, scene, frame, incrementFrame, mode, frameCount,
   decrementFrame, randomizeScene, randomizeFrame, setUpFunctions, onKeydown,
   updateFunctions, drawFunctions, drawImage, alpha, maxFrameCount, setVolume,
   reduceFramerate, incrementOrDecrementFrame, getSetUpFunctions, volume,
   getUpdateFunctions, getDrawFunctions, framerateResisterNum, resetFrameCount,
   imagesAreAvailable, userMediaIsAvailable, onGetUserMedia;
+
+/**
+ * jqueryオブジェクトを保持
+ */
+set$cache = () => {
+  $cache = {
+    self: $(`#${ELEM_NAME}`),
+    window: $(window),
+  };
+};
 
 /**
  * 初期設定
@@ -43,22 +65,13 @@ setUp = () => {
   framerateResisterNum = 0;
   imagesAreAvailable = false;
   userMediaIsAvailable = false;
-  ctx = getContext();
   setUpFunctions = getSetUpFunctions();
-  updateFunctions = getUpdateFunctions();
   drawFunctions = getDrawFunctions();
+  updateFunctions = getUpdateFunctions();
   images = [];
   loadedCount = 0;
   loadImages();
   resetFrameCount();
-};
-
-/**
- * modeに応じた更新処理
- * @exports
- */
-update = () => {
-  updateFunctions[mode]();
 };
 
 /**
@@ -70,9 +83,12 @@ draw = () => {
 };
 
 /**
- * コンテクスト取得
+ * modeに応じた更新処理
+ * @exports
  */
-getContext = () => $('canvas')[0].getContext('2d');
+update = () => {
+  updateFunctions[mode]();
+};
 
 /**
  * mode毎の、mode切り替え時の初期化・初回限定処理関数の配列
@@ -139,6 +155,20 @@ getSetUpFunctions = () => [
     alpha = COVERED;
     ctx.globalAlpha = alpha;
   },
+];
+
+/**
+ * mode毎の描画処理関数の配列
+ */
+getDrawFunctions = () => [
+  clear,
+  drawImage,
+  drawImage,
+  drawImage,
+  drawImage,
+  drawImage,
+  drawImage,
+  drawImage,
 ];
 
 /**
@@ -211,20 +241,6 @@ getUpdateFunctions = () => [
       randomizeScene();
     }
   },
-];
-
-/**
- * mode毎の描画処理関数の配列
- */
-getDrawFunctions = () => [
-  clear,
-  drawImage,
-  drawImage,
-  drawImage,
-  drawImage,
-  drawImage,
-  drawImage,
-  drawImage,
 ];
 
 /**
@@ -384,9 +400,14 @@ onGetUserMedia = () => {
  * モジュール起動
  * @exports
  */
-init = ($container) => {
-  $container.html(HTML);
-  $(window)
+init = ($wrapper) => {
+  $wrapper.append(HTML);
+  set$cache();
+  ctx = modOFVisual.init($cache.self[0], CONTEXT_TYPE);
+  if (!ctx) {
+    return;
+  }
+  $cache.window
     .on('keydown', onKeydown)
     .on('get-user-media', onGetUserMedia);
 };

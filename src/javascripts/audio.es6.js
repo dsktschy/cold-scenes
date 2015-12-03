@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import hasURL from './apis/url';
-import hasAudioContext from './apis/audio-context';
 import hasNavigatorGetUserMedia from './apis/navigator-get-user-media';
+import modOFAudio from './of/audio';
 
 const
   FFT_SIZE = 1024,
@@ -18,7 +18,16 @@ const
 var
   init, setUp, update, ctx, analyser, spectrums, getUserMedia, mode,
   setUpFunctions, updateFunctions, getSetUpFunctions, getUpdateFunctions,
-  volumeTotal, onKeydown, getVolume, userMediaIsAvailable;
+  volumeTotal, onKeydown, getVolume, userMediaIsAvailable, set$cache, $cache;
+
+/**
+ * jqueryオブジェクトを保持
+ */
+set$cache = () => {
+  $cache = {
+    window: $(window),
+  };
+};
 
 /**
  * 初期設定
@@ -28,7 +37,6 @@ setUp = () => {
   setUpFunctions = getSetUpFunctions();
   updateFunctions = getUpdateFunctions();
   userMediaIsAvailable = false;
-  ctx = new AudioContext();
   analyser = ctx.createAnalyser();
   analyser.fftSize = FFT_SIZE;
   spectrums = new Uint8Array(analyser.frequencyBinCount);
@@ -127,7 +135,7 @@ getUserMedia = () => {
     (stream) => {
       URL.createObjectURL(stream);
       ctx.createMediaStreamSource(stream).connect(analyser);
-      $(window).trigger('get-user-media');
+      $cache.window.trigger('get-user-media');
       userMediaIsAvailable = true;
       console.log(CONSOLE_MESSAGE);
     },
@@ -169,11 +177,16 @@ onKeydown = (e) => {
  * @exports
  */
 init = () => {
-  if (!hasURL || !hasAudioContext || !hasNavigatorGetUserMedia) {
+  if (!hasURL || !hasNavigatorGetUserMedia) {
     alert(API_ALERT_MESSAGE);
     return;
   }
-  $(window).on('keydown', onKeydown);
+  set$cache();
+  ctx = modOFAudio.init();
+  if (!ctx) {
+    return;
+  }
+  $cache.window.on('keydown', onKeydown);
 };
 
 export default {
