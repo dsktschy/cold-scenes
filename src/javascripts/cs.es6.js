@@ -2,6 +2,7 @@ import $ from 'jquery';
 import modOF from './of/of';
 import modVisual from './visual';
 import modAudio from './audio';
+import modInfo from './info';
 
 const
   /** モジュール名 */
@@ -67,6 +68,7 @@ init = ($wrapper) => {
   if (!modOF.init({setUp, draw, update})) {
     return;
   }
+  modInfo.init($cache.self);
 };
 
 export default {init};
