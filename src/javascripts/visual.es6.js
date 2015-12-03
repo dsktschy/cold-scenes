@@ -287,6 +287,7 @@ drawImage = () => {
 onLoadImage = () => {
   if (++loadedCount === IMAGE_TOTAL) {
     imagesAreAvailable = true;
+    $cache.window.trigger('load-image');
     console.log(CONSOLE_MESSAGE);
   }
 };

@@ -135,8 +135,8 @@ getUserMedia = () => {
     (stream) => {
       URL.createObjectURL(stream);
       ctx.createMediaStreamSource(stream).connect(analyser);
-      $cache.window.trigger('get-user-media');
       userMediaIsAvailable = true;
+      $cache.window.trigger('get-user-media');
       console.log(CONSOLE_MESSAGE);
     },
     (e) => {

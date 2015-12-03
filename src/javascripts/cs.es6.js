@@ -10,9 +10,10 @@ const
   /** HTML */
   HTML = `<div id="${ELEM_NAME}" class="${ELEM_NAME}"></div>`,
   /** 起動時に一度だけkeydownするkeycode */
-  INITIAL_KEYDOWN_KEY_CODE = 48;
+  INITIAL_KEYDOWN_KEY_CODE = 53;
 
-var init, setUp, draw, update, $cache, set$cache;
+var
+  init, setUp, draw, update, $cache, set$cache, onLoadResource, hasLoadedOther;
 
 /**
  * jqueryオブジェクトを保持
@@ -32,10 +33,7 @@ set$cache = () => {
 setUp = () => {
   modVisual.setUp();
   modAudio.setUp();
-  $cache.window.trigger($.Event(
-    'keydown',
-    {keyCode: INITIAL_KEYDOWN_KEY_CODE}
-  ));
+  $cache.window.trigger($.Event('keydown', {keyCode: 48}));
 };
 
 /**
@@ -57,12 +55,28 @@ update = () => {
 };
 
 /**
+ * 画像と音声入力の取得が完了した時のハンドラー
+ */
+onLoadResource = () => {
+  if (!hasLoadedOther) {
+    hasLoadedOther = true;
+    return;
+  }
+  $cache.window.trigger($.Event(
+    'keydown',
+    {keyCode: INITIAL_KEYDOWN_KEY_CODE}
+  ));
+};
+
+/**
  * モジュール起動
  * @exports
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);
   set$cache();
+  hasLoadedOther = false;
+  $cache.window.on('load-image get-user-media', onLoadResource);
   modVisual.init($cache.self);
   modAudio.init($cache.self);
   if (!modOF.init({setUp, draw, update})) {
