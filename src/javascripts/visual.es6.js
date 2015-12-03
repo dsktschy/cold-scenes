@@ -408,9 +408,10 @@ init = ($wrapper) => {
   if (!ctx) {
     return;
   }
-  $cache.window
-    .on('keydown', onKeydown)
-    .on('get-user-media', onGetUserMedia);
+  $cache.window.on({
+    keydown: onKeydown,
+    'get-user-media': onGetUserMedia,
+  });
 };
 
 export default {
