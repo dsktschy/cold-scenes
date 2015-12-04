@@ -1,8 +1,10 @@
 import $ from 'jquery';
 
 const
-  /** モジュール名 */
+  /** モジュール全体の要素名 */
   ELEM_NAME = 'cs-info',
+  /** LOADING部分の要素名 */
+  ELEM_NAME_LOADING = 'loading',
   /** HTML */
   HTML = '' +
     `<div id="${ELEM_NAME}" class="${ELEM_NAME}">` +
@@ -35,13 +37,22 @@ const
         '<br>' +
         '© 2015 DSKTSCHY' +
       '</p>' +
+      `<p class="${ELEM_NAME_LOADING}" id="${ELEM_NAME_LOADING}">` +
+        'LOADING <span></span>' +
+      '</p>' +
     '</div>',
   /** 表示時の透明度 */
   OPACITY_VISIBLE = '0.6',
   /** 非表示時の透明度 */
-  OPACITY_HIDDEN = '0';
+  OPACITY_HIDDEN = '0',
+  /** LOADINGアニメーションの間隔(ms) */
+  ANIMATION_INTERVAL = '500',
+  /** LOADINGの後の.の最大数 */
+  DOTS_MAX = 3;
 
-var init, set$cache, $cache, onKeydown;
+var
+  init, set$cache, $cache, onKeydown, onLoadResource, hasLoadedOther,
+  intervalID, animateDots;
 
 /**
  * jqueryオブジェクトを保持
@@ -49,8 +60,21 @@ var init, set$cache, $cache, onKeydown;
 set$cache = () => {
   $cache = {
     self: $(`#${ELEM_NAME}`),
+    loading: $(`#${ELEM_NAME_LOADING}`),
+    dots: $(`#${ELEM_NAME_LOADING}`).find('span'),
     window: $(window),
   };
+};
+
+/**
+ * .を増減する
+ */
+animateDots = () => {
+  if ($cache.dots.html().length === DOTS_MAX) {
+    $cache.dots.empty();
+    return;
+  }
+  $cache.dots.append('.');
 };
 
 /**
@@ -72,13 +96,30 @@ onKeydown = (e) => {
 };
 
 /**
+ * 画像と音声入力の取得が完了した時のハンドラー
+ */
+onLoadResource = () => {
+  if (!hasLoadedOther) {
+    hasLoadedOther = true;
+    return;
+  }
+  intervalID = null;
+  $cache.loading.remove();
+};
+
+/**
  * モジュール起動
  * @exports
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);
   set$cache();
-  $cache.window.on('keydown', onKeydown);
+  hasLoadedOther = false;
+  $cache.window.on({
+    keydown: onKeydown,
+    'load-image get-user-media': onLoadResource,
+  });
+  intervalID = setInterval(animateDots, ANIMATION_INTERVAL);
 };
 
 export default {init};
