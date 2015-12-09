@@ -103,7 +103,7 @@ onLoadResource = () => {
     hasLoadedOther = true;
     return;
   }
-  intervalID = null;
+  clearInterval(intervalID);
   $cache.loading.remove();
 };
 
