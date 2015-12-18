@@ -6,7 +6,7 @@ import modOFAudio from './of/audio';
 const
   FFT_SIZE = 1024,
   MAX_VOLUME = 1024 * 36,
-  /** API非対応ブラウザーに表示するアラートメッセージ */
+  /** API非対応ブラウザに表示するアラートメッセージ */
   API_ALERT_MESSAGE = '' +
     'This browser is not supported.\n' +
     'Please open in GoogleChrome.',
@@ -154,8 +154,9 @@ getUserMedia = () => {
 getVolume = () => volumeTotal;
 
 /**
- * キーボード押下イベントのハンドラー
+ * キーボード押下イベントのハンドラ
  *   0-7: modeを変更
+ * @param {Object} e
  */
 onKeydown = (e) => {
   switch (e.keyCode) {

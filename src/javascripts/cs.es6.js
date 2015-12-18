@@ -28,7 +28,7 @@ set$cache = () => {
 /**
  * 初期設定
  *   modVisualが先である必要あり
- *     get-user-mediaイベントが実行される前にハンドラーを登録する必要があるため
+ *     get-user-mediaイベントが実行される前にハンドラを登録する必要があるため
  */
 setUp = () => {
   modVisual.setUp();
@@ -55,7 +55,7 @@ update = () => {
 };
 
 /**
- * 画像と音声入力の取得が完了した時のハンドラー
+ * 画像と音声入力の取得が完了した時のハンドラ
  */
 onLoadResource = () => {
   if (!hasLoadedOther) {
@@ -71,6 +71,7 @@ onLoadResource = () => {
 /**
  * モジュール起動
  * @exports
+ * @param {Object} $wrapper
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);

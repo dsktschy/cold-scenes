@@ -281,7 +281,7 @@ drawImage = () => {
 };
 
 /**
- * 画像読み込み完了イベントのハンドラー
+ * 画像読み込み完了イベントのハンドラ
  *   全ての画像が読み込み完了していたらフラグを立てる
  */
 onLoadImage = () => {
@@ -294,6 +294,8 @@ onLoadImage = () => {
 
 /**
  * フレームレートを小さくする
+ * @param {number} resister
+ * @param {Function} callback
  */
 reduceFramerate = (resister, callback) => {
   if (framerateResisterNum % resister === 0) {
@@ -345,6 +347,7 @@ randomizeFrame = () => {
 /**
  * 音量を保持する
  * @exports
+ * @param {number} v
  */
 setVolume = (v) => {
   volume = v;
@@ -358,6 +361,7 @@ setVolume = (v) => {
  *   下: frameランダムに変更
  *   スペース: sceneをランダムに変更
  *   0-7: modeを変更
+ * @param {Object} e
  */
 onKeydown = (e) => {
   switch (e.keyCode) {
@@ -391,7 +395,7 @@ onKeydown = (e) => {
 };
 
 /**
- * 音声入力のAnalyser接続完了イベントのハンドラー
+ * 音声入力のAnalyser接続完了イベントのハンドラ
  */
 onGetUserMedia = () => {
   userMediaIsAvailable = true;
@@ -400,6 +404,7 @@ onGetUserMedia = () => {
 /**
  * モジュール起動
  * @exports
+ * @param {Object} @wrapper
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);

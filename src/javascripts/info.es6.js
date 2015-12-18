@@ -80,6 +80,7 @@ animateDots = () => {
 /**
  * キーボード押下イベントのハンドラ
  *   H or I: infoを表示
+ * @param {Object} e
  */
 onKeydown = (e) => {
   switch (e.keyCode) {
@@ -96,7 +97,7 @@ onKeydown = (e) => {
 };
 
 /**
- * 画像と音声入力の取得が完了した時のハンドラー
+ * 画像と音声入力の取得が完了した時のハンドラ
  */
 onLoadResource = () => {
   if (!hasLoadedOther) {
@@ -110,6 +111,7 @@ onLoadResource = () => {
 /**
  * モジュール起動
  * @exports
+ * @param {Object} $wrapper
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);
