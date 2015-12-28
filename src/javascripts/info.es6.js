@@ -27,8 +27,8 @@ const
         'Space: Change the scene<br>' +
         '<br>' +
         '<br>' +
-        '<a href="https://youtu.be/c2Qyo_Cq9zQ">' +
-          'https://youtu.be/c2Qyo_Cq9zQ' +
+        '<a href="https://youtu.be/DlldYnxNS-k">' +
+          'https://youtu.be/DlldYnxNS-k' +
         '</a><br>' +
         '<a href="http://geidai-oil.com/tsaw/">' +
           'http://geidai-oil.com/tsaw/' +
