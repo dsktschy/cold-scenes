@@ -30,10 +30,10 @@ const
         '<br>' +
         '<br>' +
         '<a href="https://youtu.be/DlldYnxNS-k">' +
-          'https://youtu.be/DlldYnxNS-k' +
+          'YouTube' +
         '</a><br>' +
         '<a href="http://geidai-oil.com/tsaw/">' +
-          'http://geidai-oil.com/tsaw/' +
+          'geidai-oil.com' +
         '</a><br>' +
         '<br>' +
         '<br>' +
