@@ -8,37 +8,30 @@ const
   /** HTML */
   HTML = '' +
     `<div id="${ELEM_NAME}" class="${ELEM_NAME}">` +
+      '<p class="br3">COLD SCENES</p>' +
+      '<p class="br2">Press the following keys</p>' +
+      '<p class="br2">[I] Open/Close this info</p>' +
+      '<p>[0] Stop</p>' +
+      '<p>[1] Random scenes and random frames, under the dark filter </p>' +
+      '<p>[2] Go to the next or previous frame, at a regular speed</p>' +
+      '<p>[3] 2 + Darken gradually</p>' +
+      '<p>[4] Random scenes and random frames, at the max speed</p>' +
       '<p>' +
-        'COLD SCENES<br>' +
-        '<br>' +
-        '<br>' +
-        'Press the following keys<br>' +
-        '<br>' +
-        '[H or I] Open/Close this info<br>' +
-        '<br>' +
-        '[0] Stop<br>' +
-        '[1] Random scenes and random frames, under the dark filter <br>' +
-        '[2] Go to the next or previous frame, at a regular speed<br>' +
-        '[3] 2 + Darken gradually<br>' +
-        '[4] Random scenes and random frames, at the max speed<br>' +
         '[5] Go to the next or previous frame, ' +
-          'at the speed according to the volume of the microphone<br>' +
-        '[6] Random scenes and Frames in forward order, at the max speed<br>' +
-        '[7] Random scenes and Frames in reverse order, at the max speed<br>' +
-        '<br>' +
-        '[Space] Change the scene<br>' +
-        '<br>' +
-        '<br>' +
-        '<a href="https://youtu.be/DlldYnxNS-k">' +
-          'YouTube' +
-        '</a><br>' +
-        '<a href="http://geidai-oil.com/tsaw/">' +
-          'geidai-oil.com' +
-        '</a><br>' +
-        '<br>' +
-        '<br>' +
-        '© 2015 DSKTSCHY' +
+        'at the speed according to the volume of the microphone' +
       '</p>' +
+      '<p>' +
+        '[6] Random scenes and Frames in forward order, at the max speed' +
+      '</p>' +
+      '<p class="br2">' +
+        '[7] Random scenes and Frames in reverse order, at the max speed' +
+      '</p>' +
+      '<p class="br3">[Space] Change the scene</p>' +
+      '<p><a href="https://youtu.be/DlldYnxNS-k">YouTube</a></p>' +
+      '<p class="br3">' +
+        '<a href="http://geidai-oil.com/tsaw/">geidai-oil.com</a>' +
+      '</p>' +
+      '<p class="br3">© 2015 DSKTSCHY</p>' +
       `<p class="${ELEM_NAME_LOADING}" id="${ELEM_NAME_LOADING}">` +
         'LOADING <span></span>' +
       '</p>' +

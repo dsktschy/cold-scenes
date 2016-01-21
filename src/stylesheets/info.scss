@@ -10,12 +10,21 @@
   transition: opacity .3s ease-in 0s;
 
   p {
+    $line-height: 1.14em;
     font: bold 16px 'Courier New';
-    margin: 0 0 32px;
+    margin: 0;
 
     a {
       text-decoration: none;
       color: inherit;
+    }
+
+    &.br2 {
+      margin: 0 0 $line-height;
+    }
+
+    &.br3 {
+      margin: 0 0 $line-height * 2;
     }
   }
 }
