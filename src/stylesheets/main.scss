@@ -1,34 +1,22 @@
-$black: #000;
-
-:root {
+html {
   box-sizing: border-box;
-}
-
-*,
-::before,
-::after {
-  box-sizing: inherit;
-}
-
-html,
-body,
-div,
-p {
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
   width: 100%;
   height: 100%;
-}
 
-body {
-  background: $black;
-}
+  *,
+  ::before,
+  ::after {
+    box-sizing: inherit;
+  }
 
-a {
-  text-decoration: none;
-  color: inherit;
+  body {
+    $black: #000;
+    background: $black;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    @import './cs';
+  }
 }

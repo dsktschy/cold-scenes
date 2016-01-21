@@ -166,24 +166,15 @@ gulp.task('sasslint', () => {
 gulp.task('sass', ['sasslint'], () => {
   return gulp
     .src([
-      `${srcCSSDir}**/*.scss`,
+      `${srcCSSDir}main.scss`,
     ], {base: srcCSSDir})
     .pipe($.plumber(plumberOpt))
     .pipe($.sass())
+    .pipe($.rename({basename: 'bundle'}))
     .pipe(gulp.dest(srcCSSDir));
 });
 
-gulp.task('css-concat', ['sass'], () => {
-  return gulp
-    .src([
-      `${srcCSSDir}**/*.css`,
-    ])
-    .pipe($.plumber(plumberOpt))
-    .pipe($.concat('bundle.css'))
-    .pipe(gulp.dest(srcCSSDir));
-});
-
-gulp.task('cssmin', ['css-concat'], () => {
+gulp.task('cssmin', ['sass'], () => {
   return gulp
     .src([
       `${srcCSSDir}bundle.css`,
